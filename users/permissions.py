@@ -1,0 +1,13 @@
+from rest_framework import permissions
+
+class IsAdmin(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_staff
+
+class IsEditor(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='editor').exists()
+
+class IsViewer(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='viewer').exists()
