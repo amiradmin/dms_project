@@ -11,11 +11,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - dms_network
 
   redis:
     image: redis:7
     ports:
       - "6379:6379"
+    networks:
+      - dms_network
 
   minio:
     image: minio/minio
@@ -26,6 +30,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     command: server --console-address ":9001" /data
+    networks:
+      - dms_network
 
   django:
     build: .
@@ -38,6 +44,28 @@ services:
       - db
       - redis
       - minio
+    networks:
+      - dms_network
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:1.25
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/code/static
+      - ./staticfiles:/code/staticfiles
+      - ./media:/code/media
+    networks:
+      - dms_network
 
 volumes:
   postgres_data:
+
+networks:
+  dms_network:
+    driver: bridge
