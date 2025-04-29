@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 from .models import Document
 from .serializers import DocumentSerializer
 from users.permissions import IsAdmin, IsEditor, IsViewer
@@ -11,10 +12,18 @@ import logging
 # Set up logger for the views module
 logger = logging.getLogger(__name__)
 
+
+class DocumentPagination(PageNumberPagination):
+    page_size = 10  # Set the number of items per page
+    page_size_query_param = 'page_size'  # Allows clients to modify the page size with the query parameter
+    max_page_size = 100  # Max number of items per page, to avoid large requests
+
+
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticated]  # Default, we'll control permissions per action
+    pagination_class = DocumentPagination
 
     def get_permissions(self):
         """
