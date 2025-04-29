@@ -17,12 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from documents.views import DocumentViewSet
+from documents.views import DocumentViewSet, get_presigned_url  # Import the view for generating the presigned URL
 from users.views import UserViewSet
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from django.conf.urls.static import static
+from django.conf import settings
+from rest_framework.authtoken.views import obtain_auth_token
 
+# Swagger schema view
 schema_view = get_schema_view(
     openapi.Info(
         title="Document Management API",
@@ -32,12 +36,26 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+# Default router for registering viewsets
 router = DefaultRouter()
 router.register(r'documents', DocumentViewSet)
 router.register('users', UserViewSet, basename='user')
 
 urlpatterns = [
+    # Admin and API paths
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+
+    # Swagger UI for API documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
+    # Authentication token path
+    path('api/login/', obtain_auth_token, name='api_login'),
+
+    # Path for generating presigned URL for downloading a document
+    path('api/documents/<int:document_id>/presigned-url/', get_presigned_url, name='get_presigned_url'),
 ]
+
+# Serve static files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

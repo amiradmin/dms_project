@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'storages',
     'documents',
     'drf_yasg',  # for swagger
     'users'
@@ -77,9 +79,21 @@ CACHES = {
 # Static files
 STATIC_URL = '/static/'
 
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Only needed for development
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+
+
 # DRF settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
@@ -91,3 +105,14 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# MinIO / S3 Storage Settings
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'minioadmin'
+AWS_SECRET_ACCESS_KEY = 'minioadmin'
+AWS_STORAGE_BUCKET_NAME = 'dms-bucket'
+AWS_S3_ENDPOINT_URL = 'http://minio:9000'
+AWS_S3_USE_SSL = False
+AWS_S3_VERIFY = False
+AWS_QUERYSTRING_AUTH = False
