@@ -89,3 +89,4 @@ docker exec -it dms_project_django_1 python manage.py createsuperuser
 ## Usage
 #### Visit http://localhost:8000 to access the application.
 #### Visit http://localhost:8000/admin/ to access the Django admin panel.
+#### Swagger UI: Visit http://localhost/swagger/ for interactive API documentation

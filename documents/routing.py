@@ -2,7 +2,9 @@
 
 from django.urls import re_path
 from . import consumers
+from typing import List
 
-websocket_urlpatterns = [
+# Define the URL routing for WebSocket connections in the documents app
+websocket_urlpatterns: List[re_path] = [
     re_path(r'ws/documents/$', consumers.DocumentConsumer.as_asgi()),
 ]

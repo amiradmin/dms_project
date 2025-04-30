@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "227d3fad-2cd4-47f5-b0a2-735bdde2c3d3",
+		"name": "DMS Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10857902"
+	},
+	"item": [
+		{
+			"name": "Upload Documents",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3add9b35bc95248746f5272a0e695a4309e283bf"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Test Doc",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/amir/Downloads/sms.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/documents/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"documents",
+						""
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://127.0.0.1:8000/api/documents/ \\\n  -H 'Authorization: Token your_token_here' \\\n  -F 'title=Test Doc' \\\n  -F 'file=@/path/to/your/file.pdf'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User List",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3add9b35bc95248746f5272a0e695a4309e283bf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Presigned url",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3add9b35bc95248746f5272a0e695a4309e283bf"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/documents/12/presigned-url/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"documents",
+						"12",
+						"presigned-url",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
