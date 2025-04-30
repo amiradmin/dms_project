@@ -8,3 +8,7 @@ psycopg2-binary
 django-redis
 channels
 channels-redis
+pytest
+pytest-django
+pytest-asyncio
+daphne

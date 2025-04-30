@@ -109,13 +109,13 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # MinIO / S3 Storage Settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'minioadmin'
-AWS_SECRET_ACCESS_KEY = 'minioadmin'
-AWS_STORAGE_BUCKET_NAME = 'dms-bucket'
-AWS_S3_ENDPOINT_URL = 'http://minio:9000'
-AWS_S3_USE_SSL = False
-AWS_S3_VERIFY = False
-AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'minioadmin')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'minioadmin')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'dms-bucket')
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL', 'http://minio:9000')
+AWS_S3_USE_SSL = os.environ.get('AWS_S3_USE_SSL', 'False') == 'True'
+AWS_S3_VERIFY = os.environ.get('AWS_S3_VERIFY', 'False') == 'True'
+AWS_QUERYSTRING_AUTH = os.environ.get('AWS_QUERYSTRING_AUTH', 'False') == 'True'
 
 
 # Channels
