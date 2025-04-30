@@ -84,6 +84,31 @@ To create a Django admin account, run:
 
 ```bash
 docker exec -it dms_project_django_1 python manage.py createsuperuser
+```
+
+# MinIO Bucket Creation
+
+To create the MinIO bucket for document storage:
+
+### Access the MinIO Dashboard
+1. Open your browser and visit [http://localhost:9000](http://localhost:9000)
+2. Use the following credentials to log in:
+   - **Access Key**: `minioadmin`
+   - **Secret Key**: `minioadmin`
+
+### Create the Bucket
+1. Once logged in, click on the **Buckets** tab in the left sidebar
+2. Click the **Create Bucket** button
+3. Enter the bucket name:
+   - Use `dms-bucket` (or another name that matches your `AWS_STORAGE_BUCKET_NAME` in `.env`)
+4. Click **Create Bucket** to finalize the creation
+
+## Post-Creation Verification
+- The new bucket should appear in your buckets list
+- Ensure the name matches exactly what you configured in your application settings
+```
+
+
 
 ```
 ## Usage
